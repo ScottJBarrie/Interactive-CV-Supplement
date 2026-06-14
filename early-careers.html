@@ -336,6 +336,14 @@ function go(next){
   window.scrollTo({ top:0, behavior: prefersReduced ? 'auto' : 'smooth' });
 }
 
+/* leave to another page, but let the tick sound first, the same as every other button */
+function leave(url, e){
+  if (e && (e.metaKey || e.ctrlKey || e.shiftKey)) return; /* let open-in-new-tab clicks behave normally */
+  if (e) e.preventDefault();
+  playTick();
+  setTimeout(function(){ window.location.href = url; }, soundOn ? 140 : 0);
+}
+
 /* ---------- shared chrome ---------- */
 function buildBar(){
   var bar = document.createElement('div');
@@ -351,6 +359,7 @@ function buildBar(){
   back.href = 'index.html';
   back.setAttribute('aria-label', 'Back to the portfolio');
   back.innerHTML = '<span class="arr" aria-hidden="true">&larr;</span> Portfolio';
+  back.addEventListener('click', function(e){ leave('index.html', e); });
   actions.appendChild(back);
 
   var snd = document.createElement('button');
@@ -417,6 +426,7 @@ function buildIntro(){
   back.href = 'index.html';
   back.setAttribute('aria-label', 'Back to the portfolio');
   back.innerHTML = '<span class="arr" aria-hidden="true">&larr;</span> Back to portfolio';
+  back.addEventListener('click', function(e){ leave('index.html', e); });
   actions.appendChild(back);
   f.appendChild(actions);
   return f;
