@@ -67,6 +67,7 @@ main:focus{outline:none}
 .hub-head{padding:36px 0 0}
 .hub-name{font-family:var(--serif);font-weight:600;font-size:clamp(40px,8vw,66px);line-height:1;letter-spacing:-.015em}
 .hub-role{font-family:var(--mono);font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-soft);margin-top:14px}
+.hub-intro{font-family:var(--sans);font-size:clamp(15.5px,2.4vw,17px);line-height:1.6;color:var(--ink-soft);margin-top:18px;max-width:46ch}
 
 /* ---------- hub: the ring of circles ---------- */
 .stage{position:relative;width:clamp(320px,84vw,540px);aspect-ratio:1/1;margin:38px auto 10px}
@@ -515,7 +516,8 @@ function buildHub(){
   var head = document.createElement('div');
   head.className = 'hub-head';
   head.innerHTML = '<h1 class="hub-name">Scott Barrie</h1>' +
-                   '<div class="hub-role">Learning &amp; Development Leader</div>';
+                   '<div class="hub-role">Learning &amp; Development Leader</div>' +
+                   '<p class="hub-intro">The work starts with deciding what a business actually needs, then building it rather than buying it in. This page is one of those builds, made by hand.</p>';
   frag.appendChild(head);
 
   var stage = document.createElement('div');
@@ -538,7 +540,18 @@ function buildHub(){
           : '<span class="node-icon" aria-hidden="true">' + n.icon + '</span>') +
       '</span>' +
       '<span class="node-label">' + n.label + '</span>';
-    b.addEventListener('click', function(){ playLand(); if (n.url) { window.location.href = n.url; } else { go(n.id); } });
+    b.addEventListener('click', function(){
+      playLand();
+      if (n.url) {
+        var dest = n.url;
+        /* hold for a short beat so the landing sound is heard before the page changes;
+           if sound is off there is nothing to wait for, so go straight away */
+        if (soundOn) { setTimeout(function(){ window.location.href = dest; }, 340); }
+        else { window.location.href = dest; }
+      } else {
+        go(n.id);
+      }
+    });
     stage.appendChild(b);
   });
   frag.appendChild(stage);
