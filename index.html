@@ -176,7 +176,7 @@ main:focus{outline:none}
 /* a faded, warm-tinted photo behind a card, with a vignette pulling the edges into shadow.
    the left side stays darker so the cream text keeps its contrast. */
 .tl-card-bg{position:absolute;inset:0;border-radius:18px;overflow:hidden;z-index:0;opacity:0;pointer-events:none}
-.tl-card-bg::before{content:'';position:absolute;inset:0;background-image:var(--img);background-size:cover;background-position:center;filter:sepia(.42) saturate(.75) brightness(.5) contrast(1.03)}
+.tl-card-bg::before{content:'';position:absolute;inset:0;background-image:var(--img);background-size:var(--img-size,cover);background-position:var(--img-pos,center);background-repeat:no-repeat;filter:sepia(.42) saturate(.75) brightness(.5) contrast(1.03)}
 .tl-card-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg, rgba(26,22,17,.9) 0%, rgba(26,22,17,.55) 52%, rgba(26,22,17,.18) 100%), radial-gradient(125% 120% at 78% 32%, rgba(26,22,17,0) 28%, rgba(26,22,17,.72) 100%)}
 .tl-card-eyebrow,.tl-card-title,.tl-card-text,.tl-now{position:relative;z-index:1}
 .tl-step.is-revealed .tl-card-bg{animation:tlBgIn 1.1s ease .12s both}
@@ -371,7 +371,7 @@ var TL_ICONS = {
 /* ---------- the career journey (from Scott's table; steps 9 to 12 fleshed out from the CV) ---------- */
 var TIMELINE = [
   { num:'1',   eyebrow:'Before print',             title:'Welfare assistant',                icon:'heart',    img:'welfare-assistant.png', text:"On a special attachment, working with children with disabilities and behavioural needs." },
-  { num:'2',   eyebrow:'Before print',             title:'Full-time musician',               icon:'music',    img:'musician.png', text:"Performing across the UK, Europe and Israel." },
+  { num:'2',   eyebrow:'Before print',             title:'Full-time musician',               icon:'music',    img:'musician.png', imgPos:'center 18%', text:"Performing across the UK, Europe and Israel." },
   { num:'3',   eyebrow:'DS Smith',                 title:'Guillotine operator',              icon:'scissors', img:'guillotine-operator.png', text:"Working on a casual basis, learning the trade from the floor up." },
   { num:'4',   eyebrow:'DS Smith',                 title:'Storeman',                         icon:'archive',  img:'storeman.png', text:"A full-time contract, keeping materials and supply moving." },
   { num:'5',   eyebrow:'DS Smith',                 title:'Printing assistant',               icon:'droplet',  img:'printing-assistant.png', text:"Working on press, managing consumables and press chemistry, and assisting in the litho process." },
@@ -384,7 +384,7 @@ var TIMELINE = [
   { num:'11',  eyebrow:'Story Contracting',        title:'Learning and Development Trainer', icon:'monitor',  img:'ld-trainer.png', text:"Establishing the company's first digital learning capability and LMS, and creating its first structured management development programme." },
   { num:'12',  eyebrow:'Roffey Park Institute',    title:'Instructional Designer',           icon:'pen',      img:'instructional-designer.png', text:"Scoping learning outcomes with client organisations and turning broad business goals into structured learning journeys, delivered face to face, live online and as hosted content." },
   { num:'13',  eyebrow:'Story Contracting',        title:'Learning and Development Partner',  icon:'users',    img:'ld-partner.png', text:"Designing the leadership and management development programmes, building interactive digital tools in-house, and making the case for change to managing directors and the executive team." },
-  { num:'14',  eyebrow:'Story Contracting',        title:'Learning and Development Manager',  icon:'compass', present:true, img:'ld-manager.png', text:"Leading L&amp;D from the central function: setting the strategy and the team's objectives, and shaping how training is directed across the business." }
+  { num:'14',  eyebrow:'Story Contracting',        title:'Learning and Development Manager',  icon:'compass', present:true, img:'ld-manager.png', imgPos:'center top', imgSize:'contain', text:"Leading L&amp;D from the central function: setting the strategy and the team's objectives, and shaping how training is directed across the business." }
 ];
 
 /* ---------- timeline runtime state ---------- */
@@ -887,7 +887,10 @@ function buildAbout(){
                    '<div class="tl-card-text">' + step.text + '</div>' +
                    '<span class="tl-stamp" aria-hidden="true">' + TL_ICONS[step.icon] + '</span>';
     if (step.present){ cardHTML = '<span class="tl-now" aria-hidden="true">Now</span>' + cardHTML; }
-    var bgHTML = step.img ? '<div class="tl-card-bg" aria-hidden="true" style="--img:url(\'' + step.img + '\')"></div>' : '';
+    var bgStyle = "--img:url('" + step.img + "')";
+    if (step.imgPos){ bgStyle += ';--img-pos:' + step.imgPos; }
+    if (step.imgSize){ bgStyle += ';--img-size:' + step.imgSize; }
+    var bgHTML = step.img ? '<div class="tl-card-bg" aria-hidden="true" style="' + bgStyle + '"></div>' : '';
     card.innerHTML = bgHTML + cardHTML;
     if (step.img){
       (function(cardEl, src){
