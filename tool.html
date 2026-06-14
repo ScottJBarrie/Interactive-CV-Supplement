@@ -656,10 +656,10 @@ function getQuestions() {
 //  STATE
 // =====================================================================
 let state = {
-  view: 'intro',  // 'intro' | 'question' | 'result'
-  path: null,     // 'task' | 'developmental'
+  view: 'welcome', // 'welcome' | 'intro' | 'question' | 'result'
+  path: null,      // 'task' | 'developmental'
   qIndex: 0,
-  answers: []     // sized when path is chosen
+  answers: []      // sized when path is chosen
 };
 
 function startPath(path) {
@@ -720,27 +720,86 @@ function render() {
   const page = document.createElement('div');
   page.className = 'page';
 
-  if (state.view === 'intro') {
+  if (state.view === 'welcome') {
     page.appendChild(buildHeader());
+    page.appendChild(buildWelcome());
+  } else if (state.view === 'intro') {
+    page.appendChild(buildHeader(makeBackBtn()));
     page.appendChild(buildIntro());
   } else if (state.view === 'question') {
-    const backBtn = document.createElement('button');
-    backBtn.className = 'back-btn';
-    backBtn.innerHTML = '&larr; Start over';
-    backBtn.addEventListener('click', () => { playReturn(); resetAll(); });
-    page.appendChild(buildHeader(backBtn));
+    page.appendChild(buildHeader(makeBackBtn()));
     page.appendChild(buildQuestion());
   } else if (state.view === 'result') {
-    const backBtn = document.createElement('button');
-    backBtn.className = 'back-btn';
-    backBtn.innerHTML = '&larr; Start over';
-    backBtn.addEventListener('click', () => { playReturn(); resetAll(); });
-    page.appendChild(buildHeader(backBtn));
+    page.appendChild(buildHeader(makeBackBtn()));
     page.appendChild(buildResult());
   }
 
   app.appendChild(page);
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// =====================================================================
+//  NAVIGATION
+//  One consistent Back control, always one step back.
+//  "Back to Portfolio" (in the header logo) is the separate way out.
+// =====================================================================
+function makeBackBtn() {
+  const b = document.createElement('button');
+  b.className = 'back-btn';
+  b.innerHTML = '&larr; Back';
+  b.addEventListener('click', goBack);
+  return b;
+}
+
+function goBack() {
+  playReturn();
+  if (state.view === 'intro') {
+    state.view = 'welcome';
+  } else if (state.view === 'question') {
+    if (state.qIndex > 0) {
+      state.qIndex -= 1;
+    } else {
+      state.view = 'intro';
+    }
+  } else if (state.view === 'result') {
+    state.view = 'question';
+    state.qIndex = getQuestions().length - 1;
+  }
+  render();
+}
+
+function goToIntro() {
+  state.view = 'intro';
+  playAdvance();
+  render();
+}
+
+// =====================================================================
+//  WELCOME SCREEN
+//  Frames the tool for a reader as a worked example of decision support.
+// =====================================================================
+function buildWelcome() {
+  const container = document.createElement('div');
+  container.className = 'container';
+
+  container.innerHTML =
+    '<div class="title-block">' +
+      '<h1 class="title">Digital learning that helps people decide</h1>' +
+      '<p class="subtitle">A short, working example, designed and built in-house as a single self-contained page. It is here so you can use it, rather than only read about it.</p>' +
+    '</div>' +
+
+    '<div class="intro-card">' +
+      '<p>Most L&amp;D guidance ends up as something to read once and forget. A well-made tool can do more. It can take someone through a real decision, ask the questions that matter, and hand back a clear recommendation with the reasoning behind it.</p>' +
+      '<p>The example here helps a manager decide whether to mentor or coach. The thinking matters more than the topic: the same approach suits any decision where good practice can be turned into something usable in the moment.</p>' +
+      '<p style="color:#888;font-size:13.5px;margin-bottom:0">Everything runs in your browser. Nothing you enter is sent or stored.</p>' +
+      '<div class="intro-start"><button class="nav-btn primary" id="welcome-begin">Begin &rarr;</button></div>' +
+    '</div>';
+
+  setTimeout(() => {
+    document.getElementById('welcome-begin').addEventListener('click', goToIntro);
+  }, 0);
+
+  return container;
 }
 
 // =====================================================================
@@ -865,21 +924,6 @@ function buildQuestion() {
     optionsEl.appendChild(btn);
   });
   card.appendChild(optionsEl);
-
-  // Back button (only; forward motion is handled by auto-advance)
-  const nav = document.createElement('div');
-  nav.className = 'q-nav';
-
-  const prevBtn = document.createElement('button');
-  prevBtn.className = 'nav-btn';
-  prevBtn.innerHTML = '&larr; Back';
-  prevBtn.disabled = state.qIndex === 0;
-  prevBtn.addEventListener('click', () => {
-    if (state.qIndex > 0) { playReturn(); state.qIndex -= 1; render(); }
-  });
-  nav.appendChild(prevBtn);
-
-  card.appendChild(nav);
   container.appendChild(card);
 
   return container;
