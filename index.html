@@ -85,6 +85,9 @@ main:focus{outline:none}
 .node-right{top:50%;left:84%}
 .node-bottom{top:84%;left:50%}
 .node-left{top:50%;left:16%}
+.node-centre{top:50%;left:50%}
+.node-centre .node-face{background:var(--accent);color:var(--paper);box-shadow:0 12px 30px rgba(156,59,43,.26)}
+.node-centre:hover .node-face,.node-centre:focus-visible .node-face{filter:brightness(1.07)}
 
 .node-glow{
   position:absolute;inset:-30%;border-radius:50%;z-index:0;pointer-events:none;opacity:0;
@@ -142,6 +145,14 @@ main:focus{outline:none}
 }
 .page-back .arr{font-family:var(--serif);font-size:15px;transition:transform .25s ease}
 .page-back:hover .arr{transform:translateX(-4px)}
+
+/* ---------- how I lead ---------- */
+.lead-lede{font-family:var(--serif);font-size:clamp(19px,3.2vw,23px);line-height:1.5}
+.lead-principles{margin-top:40px;display:flex;flex-direction:column;gap:26px}
+.lead-principle{position:relative;padding-left:56px}
+.lead-principle-n{position:absolute;left:0;top:1px;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--paper-raised);color:var(--accent);font-family:var(--mono);font-size:14px;display:flex;align-items:center;justify-content:center}
+.lead-principle-title{font-family:var(--serif);font-weight:600;font-size:19px;color:var(--ink);line-height:1.2}
+.lead-principle-text{font-size:15.5px;line-height:1.66;color:var(--ink-soft);margin-top:7px;max-width:54ch}
 
 /* ---------- footer ---------- */
 .site-footer{
@@ -258,6 +269,7 @@ main:focus{outline:none}
   .hub-head{padding:28px 0 0}
   .stage{position:static;width:auto;max-width:360px;aspect-ratio:auto;display:grid;grid-template-columns:1fr 1fr;gap:48px 10px;margin:30px auto 6px}
   .ring{display:none}
+  .node-centre{grid-column:1 / -1;justify-self:center;order:-1}
   .node{position:static;transform:none;justify-self:center;width:clamp(86px,32vw,118px);height:clamp(86px,32vw,118px)}
   .node:hover .node-face,.node:focus-visible .node-face{transform:scale(1.05)}
   .site-footer{justify-content:center;text-align:center}
@@ -324,6 +336,7 @@ var prefersReduced = window.matchMedia('(prefers-reduced-motion:reduce)').matche
 var ICON_TOOL = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>`;
 var ICON_FILM = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg>`;
 var ICON_BOOK = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 0 1 4 4v12a3 3 0 0 0-3-3H2z"></path><path d="M22 4h-6a4 4 0 0 0-4 4v12a3 3 0 0 1 3-3h7z"></path></svg>`;
+var ICON_LEAD = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="4.6"></circle><circle cx="12" cy="12" r="1.1" fill="currentColor" stroke="none"></circle></svg>`;
 
 /* ---------- subtle, classy sound (web audio; only ever fires on a click) ---------- */
 var soundOn = true;
@@ -344,7 +357,8 @@ function tone(freq, dur, peak, delay){
   }catch(e){}
 }
 function playTick(){ tone(710, 0.12, 0.02, 0); }                                  /* soft tick as the line sets off */
-function playLand(){ tone(523.25, 0.55, 0.02, 0); tone(783.99, 0.55, 0.022, 0.08); } /* gentle two-note as it lands */
+function playLand(){ tone(523.25, 0.55, 0.02, 0); tone(783.99, 0.55, 0.022, 0.08); }
+function playBack(){ tone(587.33, 0.16, 0.018, 0); tone(392.00, 0.4, 0.02, 0.05); } /* gentle descending pair on the way back */ /* gentle two-note as it lands */
 
 var AUDIO_ON_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>`;
 var AUDIO_OFF_ICON = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>`;
@@ -393,10 +407,11 @@ var tlNodes = [], tlSteps = [], tlContainer = null, tlSpine = null, tlFill = nul
 /* the four circles, placed to match the mock-up:
    portrait top (About), tool left, film right, e-learning bottom */
 var NODES = [
+  { id:'lead',    pos:'centre', label:'How I lead',    icon:ICON_LEAD, aria:'How I lead. My leadership approach and three principles.' },
   { id:'about',   pos:'top',    label:'About',         portrait:true, aria:'About. My employment history in detail.' },
   { id:'tool',    pos:'left',   label:'Live tool',     icon:ICON_TOOL, url:'tool.html', aria:'Example of a live tool, the coaching or mentoring decision aid.' },
   { id:'film',    pos:'right',  label:'In practice',   icon:ICON_FILM, aria:'An example video.' },
-  { id:'careers', pos:'bottom', label:'Early careers', icon:ICON_BOOK, aria:'An example of e-learning.' }
+  { id:'careers', pos:'bottom', label:'Early careers', icon:ICON_BOOK, url:'early-careers.html', aria:'An example of e-learning.' }
 ];
 
 /* placeholder content for each room while we furnish them one by one.
@@ -470,7 +485,7 @@ function buildHeader(withSound){
   var mark = document.createElement('button');
   mark.className = 'wordmark'; mark.type = 'button'; mark.textContent = 'Scott Barrie';
   mark.setAttribute('aria-label','Back to the start');
-  mark.addEventListener('click', function(){ go('hub'); });
+  mark.addEventListener('click', function(){ playBack(); go('hub'); });
   header.appendChild(mark);
 
   var actions = document.createElement('div');
@@ -480,8 +495,8 @@ function buildHeader(withSound){
 
   var back = document.createElement('button');
   back.className = 'back-btn'; back.type = 'button';
-  back.innerHTML = '<span class="arr">&larr;</span> Back';
-  back.addEventListener('click', function(){ go('hub'); });
+  back.innerHTML = '<span class="arr">&larr;</span> Back to the start';
+  back.addEventListener('click', function(){ playBack(); go('hub'); });
   actions.appendChild(back);
 
   header.appendChild(actions);
@@ -559,7 +574,7 @@ function buildFilm(){
   var back = document.createElement('button');
   back.className = 'page-back'; back.type = 'button';
   back.innerHTML = '<span class="arr">&larr;</span> Back to the start';
-  back.addEventListener('click', function(){ go('hub'); });
+  back.addEventListener('click', function(){ playBack(); go('hub'); });
   page.appendChild(back);
 
   frag.appendChild(page);
@@ -584,7 +599,7 @@ function buildRoom(id){
   var back = document.createElement('button');
   back.className = 'page-back'; back.type = 'button';
   back.innerHTML = '<span class="arr">&larr;</span> Back to the start';
-  back.addEventListener('click', function(){ go('hub'); });
+  back.addEventListener('click', function(){ playBack(); go('hub'); });
   page.appendChild(back);
 
   frag.appendChild(page);
@@ -918,7 +933,7 @@ function buildAbout(){
   var back = document.createElement('button');
   back.className = 'page-back'; back.type = 'button';
   back.innerHTML = '<span class="arr">&larr;</span> Back to the start';
-  back.addEventListener('click', function(){ go('hub'); });
+  back.addEventListener('click', function(){ playBack(); go('hub'); });
   frag.appendChild(back);
 
   tlContainer = tl; tlSpine = spine; tlFill = fill;
@@ -927,6 +942,29 @@ function buildAbout(){
 }
 
 /* ---------- render ---------- */
+function buildLead(){
+  var frag = document.createElement('div');
+  var page = document.createElement('section');
+  page.className = 'room-page';
+  page.innerHTML =
+    '<div class="page-eyebrow">Leadership</div>' +
+    '<h1 class="page-title">How I lead</h1>' +
+    '<p class="page-copy lead-lede">I build what a business is missing. My career has been about joining functions that were already good and adding what they lacked: a first management development programme, a first digital learning capability, a first LMS.</p>' +
+    '<p class="page-copy">I lead the same way. Find the real gap, make the case for closing it, and build something that lasts and that the business will actually use. And I want that work to reach everyone it should, from a brand new operative in a site cabin to the executive team.</p>' +
+    '<div class="lead-principles">' +
+      '<div class="lead-principle"><div class="lead-principle-n" aria-hidden="true">1</div><div class="lead-principle-title">Build what’s missing</div><div class="lead-principle-text">I start from the gap, not the trend. I work out what a function actually lacks, design for that, and build it in-house rather than buying in something that doesn’t quite fit.</div></div>' +
+      '<div class="lead-principle"><div class="lead-principle-n" aria-hidden="true">2</div><div class="lead-principle-title">Lead by influence, not by mandate</div><div class="lead-principle-text">Most of what I’ve changed, I’ve changed without the authority to insist on it. Across a federated business of autonomous divisions, I make the case to managing directors and the executive, agree the measures up front, and earn the decision to roll out company-wide.</div></div>' +
+      '<div class="lead-principle"><div class="lead-principle-n" aria-hidden="true">3</div><div class="lead-principle-title">Grow the people who do the work</div><div class="lead-principle-text">A function is only as strong as the team behind it. I develop my people and hand them real ownership, devolving design, build and platform so the capability lives in the team, not just in me.</div></div>' +
+    '</div>';
+  var back = document.createElement('button');
+  back.className = 'page-back'; back.type = 'button';
+  back.innerHTML = '<span class="arr">&larr;</span> Back to the start';
+  back.addEventListener('click', function(){ playBack(); go('hub'); });
+  page.appendChild(back);
+  frag.appendChild(page);
+  return frag;
+}
+
 function render(){
   var app = document.getElementById('app');
   app.innerHTML = '';
@@ -946,6 +984,9 @@ function render(){
   } else if (view === 'film'){
     shell.appendChild(buildHeader(false));
     content.appendChild(buildFilm());
+  } else if (view === 'lead'){
+    shell.appendChild(buildHeader(false));
+    content.appendChild(buildLead());
   } else {
     shell.appendChild(buildHeader(false));
     content.appendChild(buildRoom(view));
