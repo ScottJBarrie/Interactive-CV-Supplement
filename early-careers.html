@@ -92,6 +92,11 @@ main:focus{outline:none}
 
 /* ---------- intro ---------- */
 .intro{padding:48px 0 0;max-width:600px}
+.note-card{background:var(--paper-raised);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:14px;padding:20px 22px;margin-bottom:30px}
+.note-label{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.note-card p{font-size:15px;line-height:1.6;color:var(--ink-soft);margin-top:11px}
+.note-card p + p{margin-top:9px}
+.btn.ghost.back:hover .arr{transform:translateX(-4px)}
 .meta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
 .chip{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--line);border-radius:999px;padding:7px 14px;background:var(--paper-raised)}
 .chip .dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
@@ -386,6 +391,11 @@ function buildIntro(){
   var f = document.createElement('div');
   f.className = 'intro';
   f.innerHTML =
+    '<div class="note-card">' +
+      '<div class="note-label">A note on this piece</div>' +
+      '<p>This is a short microlearning module, built in-house with rapid authoring. It is a working sample of the interactive learning I design and build, not a brochure for it.</p>' +
+      '<p>Microlearning earns its place by being short, focused and active. It asks for a decision rather than just attention, fits inside a working day, and tends to stick better than a long, passive course.</p>' +
+    '</div>' +
     '<div class="eyebrow">A short interactive course</div>' +
     '<h1 class="title">Early careers in civil engineering</h1>' +
     '<p class="lead">The sector is running short of people, and the next generation is not yet sold on it. This is a quick walk through the challenge, the perceptions behind it, and what a thoughtful organisation can actually do.</p>' +
@@ -402,6 +412,12 @@ function buildIntro(){
   begin.innerHTML = 'Begin <span class="arr" aria-hidden="true">&rarr;</span>';
   begin.addEventListener('click', function(){ playTick(); go('cliff'); });
   actions.appendChild(begin);
+  var back = document.createElement('a');
+  back.className = 'btn ghost back';
+  back.href = 'index.html';
+  back.setAttribute('aria-label', 'Back to the portfolio');
+  back.innerHTML = '<span class="arr" aria-hidden="true">&larr;</span> Back to portfolio';
+  actions.appendChild(back);
   f.appendChild(actions);
   return f;
 }
