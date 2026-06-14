@@ -173,6 +173,15 @@ main:focus{outline:none}
 .tl-stamp{position:absolute;bottom:-18px;right:26px;width:48px;height:48px;border-radius:50%;background:#efe5d2;color:var(--accent);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 4px var(--paper),0 6px 16px rgba(42,38,32,.22)}
 .tl-stamp svg{width:22px;height:22px}
 
+/* a faded, warm-tinted photo behind a card, with a vignette pulling the edges into shadow.
+   the left side stays darker so the cream text keeps its contrast. */
+.tl-card-bg{position:absolute;inset:0;border-radius:18px;overflow:hidden;z-index:0;opacity:0;pointer-events:none}
+.tl-card-bg::before{content:'';position:absolute;inset:0;background-image:var(--img);background-size:cover;background-position:center;filter:sepia(.42) saturate(.75) brightness(.5) contrast(1.03)}
+.tl-card-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg, rgba(26,22,17,.9) 0%, rgba(26,22,17,.55) 52%, rgba(26,22,17,.18) 100%), radial-gradient(125% 120% at 78% 32%, rgba(26,22,17,0) 28%, rgba(26,22,17,.72) 100%)}
+.tl-card-eyebrow,.tl-card-title,.tl-card-text,.tl-now{position:relative;z-index:1}
+.tl-step.is-revealed .tl-card-bg{animation:tlBgIn 1.1s ease .12s both}
+@keyframes tlBgIn{from{opacity:0}to{opacity:1}}
+
 /* node states: locked, frontier (next to click), revealed */
 .tl-step.is-locked .tl-node{cursor:default}
 .tl-step.is-frontier .tl-node{cursor:pointer}
@@ -239,6 +248,7 @@ main:focus{outline:none}
   .tl-step.is-revealed .tl-card{animation:none}
   .tl-step.is-revealed .tl-dot{animation:none}
   .tl-step.is-revealed .tl-stamp{animation:none}
+  .tl-step.is-revealed .tl-card-bg{animation:none;opacity:1}
   .tl-cue .arr{animation:none}
 }
 
@@ -312,6 +322,7 @@ var TL_ICONS = {
   image:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>`,
   check:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`,
   book:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 0 1 4 4v12a3 3 0 0 0-3-3H2z"></path><path d="M22 4h-6a4 4 0 0 0-4 4v12a3 3 0 0 1 3-3h7z"></path></svg>`,
+  package:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>`,
   trending:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>`,
   monitor:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>`,
   pen:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19l7-7 3 3-7 7-3-3z"></path><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path><path d="M2 2l7.586 7.586"></path><circle cx="11" cy="11" r="2"></circle></svg>`,
@@ -322,7 +333,7 @@ var TL_ICONS = {
 
 /* ---------- the career journey (from Scott's table; steps 9 to 12 fleshed out from the CV) ---------- */
 var TIMELINE = [
-  { num:'1',   eyebrow:'Before print',             title:'Welfare assistant',                icon:'heart',    text:"On a special attachment, working with children with disabilities and behavioural needs." },
+  { num:'1',   eyebrow:'Before print',             title:'Welfare assistant',                icon:'heart',    img:PORTRAIT, text:"On a special attachment, working with children with disabilities and behavioural needs." },
   { num:'2',   eyebrow:'Before print',             title:'Full-time musician',               icon:'music',    text:"Performing across the UK, Europe and Israel." },
   { num:'3',   eyebrow:'DS Smith',                 title:'Guillotine operator',              icon:'scissors', text:"Working on a casual basis, learning the trade from the floor up." },
   { num:'4',   eyebrow:'DS Smith',                 title:'Storeman',                         icon:'archive',  text:"A full-time contract, keeping materials and supply moving." },
@@ -330,11 +341,13 @@ var TIMELINE = [
   { num:'6',   eyebrow:'DS Smith',                 title:'Pre-press technician',             icon:'image',    text:"Creating printing and coating plates, handling artwork and quality control, and measuring colour." },
   { num:'7',   eyebrow:'DS Smith',                 title:'Print technician',                 icon:'check',    text:"Quality control on materials to and from press, handling artwork issues and pre-print checks, and organising trials for inks, coatings, substrate and transfer media." },
   { num:'7.5', eyebrow:'Where the training begins', title:'DS Smith Print Academy',          icon:'book', branch:true, text:"A side project alongside the print technician role: creating and developing training to grow knowledge of the lithographic process across the UK, and delivering it where other printing methods were used. This is where learning and development began for me." },
-  { num:'8',   eyebrow:'DS Smith',                 title:'Learning and Engagement Coordinator', icon:'globe',    text:"On the pan-European Support Functions Review: curating training materials, developing a training scheduler used across the UK and Europe, coordinating the translation of training content, and tracking change-readiness assessments." },
-  { num:'9',   eyebrow:'Story Contracting',        title:'Learning and Development Trainer', icon:'monitor',  text:"Establishing the company's first digital learning capability and LMS, and creating its first structured management development programme." },
-  { num:'10',  eyebrow:'Roffey Park Institute',    title:'Instructional Designer',           icon:'pen',      text:"Scoping learning outcomes with client organisations and turning broad business goals into structured learning journeys, delivered face to face, live online and as hosted content." },
-  { num:'11',  eyebrow:'Story Contracting',        title:'Learning and Development Partner',  icon:'users',    text:"Designing the leadership and management development programmes, building interactive digital tools in-house, and making the case for change to managing directors and the executive team." },
-  { num:'12',  eyebrow:'Story Contracting',        title:'Learning and Development Manager',  icon:'compass', present:true, text:"Leading L&amp;D from the central function: setting the strategy and the team's objectives, and shaping how training is directed across the business." }
+  { num:'8',   eyebrow:'DS Smith',                 title:'Procurement Coordinator',          icon:'package',  text:"Managing all consumables for the Lockerbie site: trialling new materials, tracking costs and spending, finding more economical alternatives, and running trials to confirm quality." },
+  { num:'9',   eyebrow:'DS Smith',                 title:'Learning and Engagement Coordinator', icon:'globe',    text:"On the pan-European Support Functions Review: curating training materials, developing a training scheduler used across the UK and Europe, coordinating the translation of training content, and tracking change-readiness assessments." },
+  { num:'10',  eyebrow:'DS Smith',                 title:'Process Improvement',              icon:'trending', text:"Improving the efficiency and rigour of processes across the Lockerbie site: trialling new approaches and training people on how processes should be followed." },
+  { num:'11',  eyebrow:'Story Contracting',        title:'Learning and Development Trainer', icon:'monitor',  text:"Establishing the company's first digital learning capability and LMS, and creating its first structured management development programme." },
+  { num:'12',  eyebrow:'Roffey Park Institute',    title:'Instructional Designer',           icon:'pen',      text:"Scoping learning outcomes with client organisations and turning broad business goals into structured learning journeys, delivered face to face, live online and as hosted content." },
+  { num:'13',  eyebrow:'Story Contracting',        title:'Learning and Development Partner',  icon:'users',    text:"Designing the leadership and management development programmes, building interactive digital tools in-house, and making the case for change to managing directors and the executive team." },
+  { num:'14',  eyebrow:'Story Contracting',        title:'Learning and Development Manager',  icon:'compass', present:true, text:"Leading L&amp;D from the central function: setting the strategy and the team's objectives, and shaping how training is directed across the business." }
 ];
 
 /* ---------- timeline runtime state ---------- */
@@ -695,7 +708,8 @@ function buildAbout(){
                    '<div class="tl-card-text">' + step.text + '</div>' +
                    '<span class="tl-stamp" aria-hidden="true">' + TL_ICONS[step.icon] + '</span>';
     if (step.present){ cardHTML = '<span class="tl-now" aria-hidden="true">Now</span>' + cardHTML; }
-    card.innerHTML = cardHTML;
+    var bgHTML = step.img ? '<div class="tl-card-bg" aria-hidden="true" style="--img:url(\'' + step.img + '\')"></div>' : '';
+    card.innerHTML = bgHTML + cardHTML;
     cw.appendChild(card);
 
     var cue = document.createElement('div'); cue.className = 'tl-cue'; cue.setAttribute('aria-hidden','true');
