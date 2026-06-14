@@ -90,6 +90,15 @@ main:focus{outline:none}
 .linkback:hover .arr{transform:translateX(-4px)}
 .actions{margin-top:34px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
 
+/* gentle ring that breathes outward, to draw the eye to the Portfolio button on the close screen.
+   the reduced-motion rule below switches this off for anyone who prefers less movement. */
+@keyframes portfolioPulse{
+  0%{box-shadow:0 8px 22px rgba(156,59,43,.22),0 0 0 0 rgba(156,59,43,.42)}
+  70%{box-shadow:0 8px 22px rgba(156,59,43,.22),0 0 0 13px rgba(156,59,43,0)}
+  100%{box-shadow:0 8px 22px rgba(156,59,43,.22),0 0 0 0 rgba(156,59,43,0)}
+}
+.btn.pulse{animation:portfolioPulse 2.1s ease-out infinite}
+
 /* ---------- intro ---------- */
 .intro{padding:48px 0 0;max-width:600px}
 .note-card{background:var(--paper-raised);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:14px;padding:20px 22px;margin-bottom:30px}
@@ -752,6 +761,15 @@ function buildClose(){
 
   var actions = document.createElement('div');
   actions.className = 'actions';
+
+  var portfolio = document.createElement('a');
+  portfolio.className = 'btn pulse';
+  portfolio.href = 'index.html';
+  portfolio.setAttribute('aria-label', 'Back to the portfolio');
+  portfolio.innerHTML = '<span class="arr" aria-hidden="true">&larr;</span> Portfolio';
+  portfolio.addEventListener('click', function(e){ leave('index.html', e); });
+  actions.appendChild(portfolio);
+
   var again = document.createElement('button');
   again.className = 'btn ghost'; again.type = 'button';
   again.innerHTML = '<span class="arr" aria-hidden="true">&larr;</span> Start again';
