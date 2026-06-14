@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Early Careers in Civil Engineering, a short course</title>
+<style>
+/* ===================================================================
+   ATELIER THEME, carried over from the hub.
+   Warm card-stock paper, a bound-book brick accent, a bookish serif for
+   display, a clean sans for body, a quiet monospaced voice for labels.
+   Everything is in this one file. No external fonts, scripts or calls.
+   =================================================================== */
+:root{
+  --paper:#ece4d3;
+  --paper-raised:#f6f0e2;
+  --ink:#2a2620;
+  --ink-soft:#574f40;
+  --line:#d8cdb6;
+  --accent:#9c3b2b;
+  --glow:#e6a766;
+  --good:#5c6f4a;
+
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Charter",Georgia,"Times New Roman",serif;
+  --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,"Cascadia Mono","Roboto Mono",Consolas,monospace;
+
+  --wrap:760px;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  min-height:100vh;
+  font-family:var(--sans);
+  color:var(--ink);
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  background:radial-gradient(120% 90% at 50% 12%, #f1ead9 0%, var(--paper) 58%, #e4dac6 100%);
+}
+
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 26px;width:100%}
+main:focus{outline:none}
+.view{animation:viewIn .45s cubic-bezier(.2,.7,.2,1) both}
+@keyframes viewIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+
+/* ---------- top bar ---------- */
+.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px 0 6px}
+.mark{font-family:var(--mono);font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-soft)}
+.bar-actions{display:flex;align-items:center;gap:12px}
+.back-link{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);text-decoration:none;background:none;border:1px solid var(--line);border-radius:999px;padding:8px 16px;cursor:pointer;transition:all .25s ease}
+.back-link:hover{color:var(--accent);border-color:var(--accent);background:var(--paper-raised)}
+.back-link .arr{font-family:var(--serif);font-size:14px;line-height:1;transition:transform .25s ease}
+.back-link:hover .arr{transform:translateX(-4px)}
+.sound-toggle{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;background:var(--paper-raised);border:1px solid var(--line);border-radius:50%;color:var(--accent);cursor:pointer;padding:0;transition:all .2s ease}
+.sound-toggle:hover{background:#efe1d8;border-color:var(--accent)}
+.sound-toggle.muted{color:var(--ink-soft);background:var(--paper)}
+.sound-toggle svg{width:17px;height:17px}
+
+/* ---------- progress ---------- */
+.progress{display:flex;align-items:center;gap:10px;padding:10px 0 0}
+.progress-track{flex:1;height:5px;background:var(--line);border-radius:6px;overflow:hidden}
+.progress-fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--glow));border-radius:6px;transition:width .5s cubic-bezier(.4,0,.2,1)}
+.progress-text{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap}
+
+/* ---------- shared type ---------- */
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--accent)}
+.title{font-family:var(--serif);font-weight:600;font-size:clamp(30px,6vw,46px);line-height:1.08;letter-spacing:-.015em;margin-top:14px}
+.lead{font-size:clamp(16px,2.6vw,17.5px);color:var(--ink);margin-top:20px}
+.lead + .lead{margin-top:13px}
+.muted{color:var(--ink-soft)}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;cursor:pointer;font-family:var(--sans);
+  font-size:15px;font-weight:600;border-radius:999px;padding:13px 26px;border:1px solid var(--accent);
+  background:var(--accent);color:var(--paper-raised);transition:transform .18s ease,box-shadow .25s ease,background .25s ease;
+  box-shadow:0 8px 22px rgba(156,59,43,.22);
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(156,59,43,.30)}
+.btn:active{transform:translateY(0)}
+.btn .arr{font-family:var(--serif);font-size:17px;line-height:1;transition:transform .2s ease}
+.btn:hover .arr{transform:translateX(4px)}
+.btn.ghost{background:none;color:var(--accent);box-shadow:none}
+.btn.ghost:hover{background:var(--paper-raised)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.btn:focus-visible{outline:none;box-shadow:0 0 0 3px var(--paper),0 0 0 6px var(--accent)}
+.linkback{margin-top:34px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);background:none;border:none;cursor:pointer;padding:8px 0;display:inline-flex;align-items:center;gap:9px}
+.linkback .arr{font-family:var(--serif);font-size:15px;transition:transform .25s ease}
+.linkback:hover .arr{transform:translateX(-4px)}
+.actions{margin-top:34px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+
+/* ---------- intro ---------- */
+.intro{padding:48px 0 0;max-width:600px}
+.meta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.chip{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--line);border-radius:999px;padding:7px 14px;background:var(--paper-raised)}
+.chip .dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+
+/* ---------- section head ---------- */
+.sec-head{padding:30px 0 0;max-width:600px}
+.sec-hint{font-size:14.5px;color:var(--ink-soft);margin-top:14px;font-style:italic}
+
+/* ---------- the cliff: stats ---------- */
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:30px}
+@media(max-width:560px){.stats{grid-template-columns:1fr}}
+.stat{background:var(--ink);color:#efe5d2;border-radius:18px;padding:24px 24px 22px;box-shadow:0 12px 28px rgba(42,38,32,.16);opacity:0;transform:translateY(12px)}
+.stat.show{animation:statIn .55s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes statIn{to{opacity:1;transform:none}}
+.stat-num{font-family:var(--serif);font-weight:600;font-size:46px;line-height:1;color:#f4ecda;letter-spacing:-.01em}
+.stat-num .pre{font-size:22px;color:var(--glow);margin-right:4px;font-weight:600}
+.stat-label{font-size:14.5px;line-height:1.55;color:rgba(239,229,210,.85);margin-top:12px}
+.stat-src{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:rgba(239,229,210,.5);margin-top:12px}
+.synthesis{margin-top:26px;font-family:var(--serif);font-size:clamp(19px,3.4vw,23px);line-height:1.4;color:var(--ink);opacity:0;transition:opacity .7s ease}
+.synthesis.show{opacity:1}
+
+/* ---------- myths: flip cards ---------- */
+.myths{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:30px}
+@media(max-width:560px){.myths{grid-template-columns:1fr}}
+.flip{background:none;border:none;padding:0;cursor:pointer;font-family:inherit;color:inherit;text-align:left;perspective:1100px;min-height:178px}
+.flip-inner{position:relative;width:100%;height:100%;min-height:178px;transition:transform .6s cubic-bezier(.3,.7,.2,1);transform-style:preserve-3d}
+.flip.flipped .flip-inner{transform:rotateY(180deg)}
+.flip-face{position:absolute;inset:0;border-radius:18px;padding:22px 22px;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;min-height:178px}
+.flip-front{background:var(--paper-raised);border:1px solid var(--line)}
+.flip-front .myth-tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+.flip-front .myth-text{font-family:var(--serif);font-size:20px;line-height:1.25;color:var(--ink);margin-top:auto}
+.flip-front .myth-cue{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-top:14px}
+.flip-back{background:var(--ink);color:#efe5d2;transform:rotateY(180deg);border:1px solid var(--ink)}
+.flip-back .myth-tag{font-family:var(--mono);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--glow)}
+.flip-back .myth-text{font-size:15px;line-height:1.55;color:rgba(239,229,210,.9);margin-top:12px}
+.flip:focus-visible{outline:none}
+.flip:focus-visible .flip-inner{box-shadow:0 0 0 3px var(--paper),0 0 0 6px var(--accent);border-radius:18px}
+.flip.done .flip-front{border-color:var(--accent)}
+
+/* ---------- calls: decisions ---------- */
+.card{background:var(--paper-raised);border:1px solid var(--line);border-radius:22px;padding:30px 28px;margin-top:26px;box-shadow:0 10px 26px rgba(42,38,32,.08)}
+.scene-tag{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
+.scene{font-family:var(--serif);font-size:clamp(20px,3.6vw,25px);line-height:1.3;color:var(--ink);margin-top:12px}
+.opts{display:flex;flex-direction:column;gap:11px;margin-top:22px}
+.opt{display:flex;align-items:flex-start;gap:14px;background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:15px 18px;cursor:pointer;text-align:left;font-family:var(--sans);font-size:15.5px;color:var(--ink);transition:all .16s ease;width:100%;line-height:1.5}
+.opt:hover{border-color:var(--glow);background:#fffaf0;transform:translateX(3px)}
+.opt:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--paper),0 0 0 5px var(--accent)}
+.opt .mk{width:20px;height:20px;border-radius:50%;border:2px solid var(--line);flex-shrink:0;margin-top:1px;transition:all .16s ease}
+.opt.chosen{border-color:var(--accent);background:#f7ece6}
+.opt.chosen .mk{border-color:var(--accent);background:var(--accent)}
+.opt.chosen.good{border-color:var(--good);background:#eef1e7}
+.opt.chosen.good .mk{border-color:var(--good);background:var(--good)}
+.opts.locked .opt{cursor:default;pointer-events:none}
+.opts.locked .opt:not(.chosen){opacity:.5}
+.feedback{margin-top:20px;border-left:3px solid var(--accent);padding:4px 0 4px 18px;opacity:0;max-height:0;overflow:hidden;transition:opacity .4s ease}
+.feedback.show{opacity:1;max-height:600px}
+.feedback .fb-verdict{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.feedback .fb-verdict.strong{color:var(--good)}
+.feedback p{font-size:15px;line-height:1.62;color:var(--ink)}
+.feedback p + p{margin-top:9px}
+
+/* ---------- model: assemble ---------- */
+.board{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:26px}
+@media(max-width:560px){.board{grid-template-columns:1fr 1fr}}
+.quad{background:var(--paper-raised);border:1px dashed var(--line);border-radius:16px;padding:16px 16px 14px;min-height:118px;transition:border-color .3s ease,background .3s ease}
+.quad.lit{border-style:solid;border-color:var(--accent)}
+.quad-name{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+.quad-slot{font-size:13px;line-height:1.4;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px 11px;margin-top:9px;opacity:0;transform:translateY(6px);animation:slotIn .4s ease forwards}
+@keyframes slotIn{to{opacity:1;transform:none}}
+.placer{margin-top:26px}
+.placer .lever{font-family:var(--serif);font-size:clamp(19px,3.4vw,23px);line-height:1.3;color:var(--ink);text-align:center;padding:0 6px}
+.placer .ask{text-align:center;font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);margin-top:8px}
+.stage-btns{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:18px}
+@media(max-width:560px){.stage-btns{grid-template-columns:1fr}}
+.stage-btn{display:flex;flex-direction:column;gap:3px;text-align:left;background:#fff;border:1.5px solid var(--line);border-radius:14px;padding:14px 16px;cursor:pointer;font-family:var(--sans);color:var(--ink);transition:all .16s ease}
+.stage-btn .sb-name{font-weight:600;font-size:15.5px}
+.stage-btn .sb-gloss{font-size:13px;line-height:1.4;color:var(--ink-soft)}
+.stage-btn:hover{border-color:var(--glow);background:#fffaf0}
+.stage-btn:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--paper),0 0 0 5px var(--accent)}
+.stage-btn.right{border-color:var(--good);background:#eef1e7;animation:pop .4s ease}
+.stage-btn.right .sb-name{color:var(--good)}
+.stage-btn.wrong{border-color:var(--accent);background:#f7ece6;animation:nudge .4s ease}
+.placer-count{text-align:center;font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);margin-top:18px}
+.board-label{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);margin:34px 0 0;text-align:center}
+.quad-gloss{font-size:11.5px;line-height:1.35;color:var(--ink-soft);margin-top:3px}
+@keyframes pop{0%{transform:scale(1)}45%{transform:scale(1.04)}100%{transform:scale(1)}}
+@keyframes nudge{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.placer-note{margin-top:16px;text-align:center;font-size:14.5px;line-height:1.55;color:var(--ink-soft);min-height:22px}
+.placer-note b{color:var(--ink);font-weight:600}
+
+/* ---------- close ---------- */
+.close-card{background:var(--ink);color:#efe5d2;border-radius:22px;padding:34px 30px;margin-top:28px;box-shadow:0 14px 34px rgba(42,38,32,.2)}
+.close-card .eyebrow{color:var(--glow)}
+.close-card .ctitle{font-family:var(--serif);font-weight:600;font-size:clamp(24px,4.6vw,32px);line-height:1.15;color:#f4ecda;margin-top:12px}
+.close-card p{font-size:15.5px;line-height:1.66;color:rgba(239,229,210,.88);margin-top:16px}
+.signature{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-top:30px;line-height:1.7}
+
+/* ---------- footer ---------- */
+.foot{margin-top:50px;padding:20px 0 44px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);text-align:center}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important}
+  .flip.flipped .flip-inner{transition:none}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+/* ===================================================================
+   A small hand-written step machine. One file, several screens.
+   We hold the current screen in a variable and redraw when it changes.
+   No framework, nothing fetched.
+   =================================================================== */
+
+var prefersReduced = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+/* ---------- subtle, classy sound (web audio, only ever fires on a click) ---------- */
+var soundOn = true;
+var audioCtx = null;
+function ac(){ if(!audioCtx){ try{ audioCtx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ return null; } } if(audioCtx.state==='suspended') audioCtx.resume(); return audioCtx; }
+function tone(freq, dur, peak, delay){
+  if(!soundOn) return;
+  var c = ac(); if(!c) return;
+  try{
+    var now = c.currentTime + (delay||0);
+    var o = c.createOscillator(), g = c.createGain();
+    o.type = 'sine'; o.frequency.value = freq;
+    g.gain.setValueAtTime(0, now);
+    g.gain.linearRampToValueAtTime(peak, now + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+    o.connect(g); g.connect(c.destination);
+    o.start(now); o.stop(now + dur + 0.05);
+  }catch(e){}
+}
+function playTick(){ tone(710, 0.12, 0.02, 0); }
+function playLand(){ tone(523.25, 0.5, 0.02, 0); tone(783.99, 0.5, 0.022, 0.08); }
+function playWarm(){ tone(392, 0.4, 0.018, 0); }
+
+var AUDIO_ON_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>';
+var AUDIO_OFF_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>';
+
+/* ---------- content ---------- */
+var STATS = [
+  { pre:'under ', num:19, suf:'%', label:'of the construction workforce is under 25, fewer than one in five.', src:'CITB Industry Picture 2026' },
+  { pre:'',      num:750, suf:'k', label:'workers could retire by 2036, taking decades of know-how with them.', src:'Sector workforce estimates' },
+  { pre:'under ', num:5, suf:'%', label:'of young people are even considering a career in the sector.', src:'Construction recruitment data' },
+  { pre:'',      num:41, suf:'%', label:'of construction apprenticeships are completed. Keeping people in is the hard part.', src:'Construction News 2026' }
+];
+
+var MYTHS = [
+  { tag:'The myth', front:'It is all hard hats and heavy lifting.', back:'Modern civil engineering is design, data, 3D modelling and sustainability, every bit as much as it is work on site.' },
+  { tag:'The myth', front:'There is no real career in it.', back:'Clear routes run from apprentice to chartered engineer, with technical depth and lateral moves along the way.' },
+  { tag:'The myth', front:'It is a man\u2019s world.', back:'It has been, and that is the problem. Women are only about 17% of the workforce. The sector is short of talent because it has drawn from too narrow a pool.' },
+  { tag:'The myth', front:'You need a degree to get in.', back:'Apprenticeships, T levels and the new foundation apprenticeships open the door straight from school, earning while you learn.' }
+];
+
+var CALLS = [
+  {
+    tag:'Decision one',
+    scene:'Apprentice applications are down, and the few you get are nearly all young men from the same two schools. What is the most useful first move?',
+    options:[
+      { text:'Raise the apprentice wage to compete on pay.',
+        strong:false, verdict:'A fair move, not the first one',
+        fb:['Pay matters, and it helps people stay. But it will not change who is applying. The pool is shaped long before the wage is seen.'] },
+      { text:'Start structured outreach into more schools, with site visits and relatable role models, deliberately reaching girls and under-represented groups.',
+        strong:true, verdict:'The strongest first move',
+        fb:['Most young people rule the sector out before they ever apply, often before they leave primary school. Widening who you reach, and changing what they picture, reshapes the pool at its source.','This is the thinking behind sector Summer Schools and STEM days.'] },
+      { text:'Ask your training provider to send more candidates.',
+        strong:false, verdict:'Treats the symptom',
+        fb:['A provider can only pass on people who already applied. The shortfall is upstream, in who knows about the work and believes it is for them.'] }
+    ]
+  },
+  {
+    tag:'Decision two',
+    scene:'Three months in, two of your new apprentices are quietly disengaging. What do you prioritise?',
+    options:[
+      { text:'Remind them of the completion stats and the importance of sticking with it.',
+        strong:false, verdict:'Understandable, but it backfires',
+        fb:['Pressure rarely re-engages anyone. Dropout is driven by unclear pathways and weak support, not by people forgetting the statistics.'] },
+      { text:'Give each a named mentor and a clear next step, and check in on how they are really doing, the work and the wellbeing.',
+        strong:true, verdict:'The strongest response',
+        fb:['Mentoring, a visible next rung on the ladder and genuine pastoral support are exactly what the evidence ties to completion.','It is the logic behind cohort development days and a proper early-careers framework.'] },
+      { text:'Move them onto more demanding live work to show your faith in them.',
+        strong:false, verdict:'Half right',
+        fb:['Meaningful work does help. But stretch without support can tip into sink-or-swim. Pair the real responsibility with someone in their corner.'] }
+    ]
+  }
+];
+
+var STAGES = ['Attract','Develop','Retain','Measure'];
+var STAGE_GLOSS = {
+  Attract:'Spark interest before they apply',
+  Develop:'Build their skills and belonging',
+  Retain:'Give people reasons to stay',
+  Measure:'Track what is actually working'
+};
+var LEVERS = [
+  { text:'Run STEM outreach into more schools', stage:'Attract', why:'Reaches young people before they rule the sector out.' },
+  { text:'Show the modern, digital reality of the work', stage:'Attract', why:'Replaces the hard-hat stereotype with design, data and purpose.' },
+  { text:'Give role-relevant onboarding from day one', stage:'Develop', why:'Each starter gets what their role actually needs, nothing wasted.' },
+  { text:'Bring cohorts together for peer learning', stage:'Develop', why:'Shared development days build belonging and confidence.' },
+  { text:'Assign a named mentor to every apprentice', stage:'Retain', why:'A person in their corner is the single biggest pull to stay.' },
+  { text:'Make the next step on the ladder visible', stage:'Retain', why:'People stay when they can see where the role leads.' },
+  { text:'Track completion, not just starts', stage:'Measure', why:'Starts flatter the numbers. Completion tells the truth.' },
+  { text:'Forecast levy spend before it expires', stage:'Measure', why:'With faster expiry and higher co-investment, planning protects the funding.' }
+];
+
+/* ---------- state ---------- */
+var screen = 'intro';
+var callIndex = 0;
+var leverIndex = 0;
+var placed = { Attract:[], Develop:[], Retain:[], Measure:[] };
+var leverOrder = [];
+
+/* Fisher-Yates shuffle, so the levers are not in a giveaway order */
+function shuffle(arr){
+  for (var i = arr.length - 1; i > 0; i--){
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+  }
+  return arr;
+}
+
+/* progress: which beats are done, used for the bar */
+var BEATS = ['intro','cliff','myths','calls','model','close'];
+function progressPct(){
+  var i = BEATS.indexOf(screen);
+  return Math.round((i / (BEATS.length - 1)) * 100);
+}
+
+function go(next){
+  screen = next;
+  render();
+  window.scrollTo({ top:0, behavior: prefersReduced ? 'auto' : 'smooth' });
+}
+
+/* ---------- shared chrome ---------- */
+function buildBar(){
+  var bar = document.createElement('div');
+  bar.className = 'bar';
+  var mark = document.createElement('div');
+  mark.className = 'mark';
+  mark.textContent = 'Early careers';
+  var actions = document.createElement('div');
+  actions.className = 'bar-actions';
+
+  var back = document.createElement('a');
+  back.className = 'back-link';
+  back.href = 'index.html';
+  back.setAttribute('aria-label', 'Back to the portfolio');
+  back.innerHTML = '<span class="arr" aria-hidden="true">&larr;</span> Portfolio';
+  actions.appendChild(back);
+
+  var snd = document.createElement('button');
+  snd.className = 'sound-toggle' + (soundOn ? '' : ' muted');
+  snd.type = 'button';
+  snd.innerHTML = soundOn ? AUDIO_ON_ICON : AUDIO_OFF_ICON;
+  snd.title = soundOn ? 'Sound on, tap to mute' : 'Sound off, tap to enable';
+  snd.setAttribute('aria-label', snd.title);
+  snd.addEventListener('click', function(){
+    soundOn = !soundOn;
+    snd.classList.toggle('muted', !soundOn);
+    snd.innerHTML = soundOn ? AUDIO_ON_ICON : AUDIO_OFF_ICON;
+    snd.title = soundOn ? 'Sound on, tap to mute' : 'Sound off, tap to enable';
+    snd.setAttribute('aria-label', snd.title);
+    if (soundOn) playTick();
+  });
+  actions.appendChild(snd);
+  bar.appendChild(mark); bar.appendChild(actions);
+  return bar;
+}
+
+function buildProgress(){
+  if (screen === 'intro') return document.createTextNode('');
+  var labels = { cliff:'The challenge', myths:'The perceptions', calls:'The decisions', model:'What good looks like', close:'In summary' };
+  var wrap = document.createElement('div');
+  wrap.className = 'progress';
+  var track = document.createElement('div'); track.className = 'progress-track';
+  var fill = document.createElement('div'); fill.className = 'progress-fill';
+  track.appendChild(fill);
+  var text = document.createElement('div'); text.className = 'progress-text'; text.textContent = labels[screen] || '';
+  wrap.appendChild(track); wrap.appendChild(text);
+  requestAnimationFrame(function(){ fill.style.width = progressPct() + '%'; });
+  return wrap;
+}
+
+/* ---------- intro ---------- */
+function buildIntro(){
+  var f = document.createElement('div');
+  f.className = 'intro';
+  f.innerHTML =
+    '<div class="eyebrow">A short interactive course</div>' +
+    '<h1 class="title">Early careers in civil engineering</h1>' +
+    '<p class="lead">The sector is running short of people, and the next generation is not yet sold on it. This is a quick walk through the challenge, the perceptions behind it, and what a thoughtful organisation can actually do.</p>' +
+    '<p class="lead muted">You will face a couple of real decisions along the way. There is no catch, just the kind of judgement the work asks for.</p>' +
+    '<div class="meta-row">' +
+      '<span class="chip"><span class="dot"></span>About 6 minutes</span>' +
+      '<span class="chip"><span class="dot"></span>Interactive</span>' +
+      '<span class="chip"><span class="dot"></span>Nothing leaves the page</span>' +
+    '</div>';
+  var actions = document.createElement('div');
+  actions.className = 'actions';
+  var begin = document.createElement('button');
+  begin.className = 'btn'; begin.type = 'button';
+  begin.innerHTML = 'Begin <span class="arr" aria-hidden="true">&rarr;</span>';
+  begin.addEventListener('click', function(){ playTick(); go('cliff'); });
+  actions.appendChild(begin);
+  f.appendChild(actions);
+  return f;
+}
+
+/* ---------- the cliff ---------- */
+function countUp(el, target, suf, pre){
+  if (prefersReduced){ el.innerHTML = (pre?'<span class="pre">'+pre+'</span>':'') + target + suf; return; }
+  var start = null, dur = 900;
+  function step(ts){
+    if (!start) start = ts;
+    var p = Math.min((ts - start) / dur, 1);
+    var eased = 1 - Math.pow(1 - p, 3);
+    var val = Math.round(eased * target);
+    el.innerHTML = (pre?'<span class="pre">'+pre+'</span>':'') + val + suf;
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+function buildCliff(){
+  var f = document.createElement('div');
+  var head = document.createElement('div');
+  head.className = 'sec-head';
+  head.innerHTML =
+    '<div class="eyebrow">The challenge</div>' +
+    '<h2 class="title">A talent cliff</h2>' +
+    '<p class="sec-hint">Four numbers that set the scene.</p>';
+  f.appendChild(head);
+
+  var grid = document.createElement('div');
+  grid.className = 'stats';
+  STATS.forEach(function(s){
+    var card = document.createElement('div');
+    card.className = 'stat';
+    var num = document.createElement('div'); num.className = 'stat-num'; num.textContent = '0';
+    var label = document.createElement('div'); label.className = 'stat-label'; label.textContent = s.label;
+    var src = document.createElement('div'); src.className = 'stat-src'; src.textContent = s.src;
+    card.appendChild(num); card.appendChild(label); card.appendChild(src);
+    grid.appendChild(card);
+    card._num = num; card._stat = s;
+  });
+  f.appendChild(grid);
+
+  var synth = document.createElement('p');
+  synth.className = 'synthesis';
+  synth.textContent = 'More people leaving. More work to build. Too few coming in, and too few staying.';
+  f.appendChild(synth);
+
+  var actions = document.createElement('div');
+  actions.className = 'actions';
+  var next = document.createElement('button');
+  next.className = 'btn'; next.type = 'button';
+  next.innerHTML = 'So why is that? <span class="arr" aria-hidden="true">&rarr;</span>';
+  next.addEventListener('click', function(){ playTick(); go('myths'); });
+  actions.appendChild(next);
+  f.appendChild(actions);
+
+  /* reveal the stats one by one, count up, then the synthesis line */
+  var cards = grid.querySelectorAll('.stat');
+  cards.forEach(function(card, i){
+    var delay = prefersReduced ? 0 : 180 * i;
+    setTimeout(function(){
+      card.classList.add('show');
+      playWarm();
+      countUp(card._num, card._stat.num, card._stat.suf, card._stat.pre);
+    }, delay);
+  });
+  setTimeout(function(){ synth.classList.add('show'); }, prefersReduced ? 0 : 180 * cards.length + 500);
+
+  return f;
+}
+
+/* ---------- myths ---------- */
+function buildMyths(){
+  var f = document.createElement('div');
+  var head = document.createElement('div');
+  head.className = 'sec-head';
+  head.innerHTML =
+    '<div class="eyebrow">The perceptions</div>' +
+    '<h2 class="title">Turn them over</h2>' +
+    '<p class="sec-hint">Tap each card to flip the myth and find the reality.</p>';
+  f.appendChild(head);
+
+  var grid = document.createElement('div');
+  grid.className = 'myths';
+  var flippedCount = 0;
+  var nextBtn;
+
+  MYTHS.forEach(function(m, i){
+    var b = document.createElement('button');
+    b.className = 'flip'; b.type = 'button';
+    b.setAttribute('aria-label', 'Myth: ' + m.front + '. Tap to reveal the reality.');
+    b.innerHTML =
+      '<div class="flip-inner">' +
+        '<div class="flip-face flip-front">' +
+          '<div class="myth-tag">' + m.tag + '</div>' +
+          '<div class="myth-text">' + m.front + '</div>' +
+          '<div class="myth-cue">Tap to turn &rarr;</div>' +
+        '</div>' +
+        '<div class="flip-face flip-back">' +
+          '<div class="myth-tag">The reality</div>' +
+          '<div class="myth-text">' + m.back + '</div>' +
+        '</div>' +
+      '</div>';
+    b.addEventListener('click', function(){
+      var wasFlipped = b.classList.contains('flipped');
+      b.classList.toggle('flipped');
+      if (!wasFlipped){
+        playWarm();
+        if (!b.classList.contains('done')){
+          b.classList.add('done');
+          flippedCount++;
+          if (flippedCount === MYTHS.length && nextBtn){
+            nextBtn.disabled = false;
+            nextBtn.innerHTML = 'Now, your call <span class="arr" aria-hidden="true">&rarr;</span>';
+          }
+        }
+      }
+    });
+    grid.appendChild(b);
+  });
+  f.appendChild(grid);
+
+  var actions = document.createElement('div');
+  actions.className = 'actions';
+  nextBtn = document.createElement('button');
+  nextBtn.className = 'btn'; nextBtn.type = 'button'; nextBtn.disabled = true;
+  nextBtn.innerHTML = 'Turn all four to continue';
+  nextBtn.addEventListener('click', function(){ playTick(); go('calls'); });
+  actions.appendChild(nextBtn);
+  f.appendChild(actions);
+  return f;
+}
+
+/* ---------- calls ---------- */
+function buildCalls(){
+  var f = document.createElement('div');
+  var c = CALLS[callIndex];
+
+  var head = document.createElement('div');
+  head.className = 'sec-head';
+  head.innerHTML =
+    '<div class="eyebrow">The decisions</div>' +
+    '<h2 class="title">You are the early careers lead</h2>' +
+    '<p class="sec-hint">Decision ' + (callIndex + 1) + ' of ' + CALLS.length + '. Pick the response you would back.</p>';
+  f.appendChild(head);
+
+  var card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = '<div class="scene-tag">' + c.tag + '</div><div class="scene">' + c.scene + '</div>';
+
+  var opts = document.createElement('div');
+  opts.className = 'opts';
+  var feedback = document.createElement('div');
+  feedback.className = 'feedback';
+  var nextBtn;
+
+  c.options.forEach(function(o){
+    var b = document.createElement('button');
+    b.className = 'opt'; b.type = 'button';
+    b.innerHTML = '<span class="mk" aria-hidden="true"></span><span>' + o.text + '</span>';
+    b.addEventListener('click', function(){
+      if (opts.classList.contains('locked')) return;
+      opts.classList.add('locked');
+      b.classList.add('chosen');
+      if (o.strong) b.classList.add('good');
+      o.strong ? playLand() : playWarm();
+      var fb = '<div class="fb-verdict' + (o.strong ? ' strong' : '') + '">' + o.verdict + '</div>';
+      o.fb.forEach(function(p){ fb += '<p>' + p + '</p>'; });
+      feedback.innerHTML = fb;
+      feedback.classList.add('show');
+      if (nextBtn){ nextBtn.disabled = false; nextBtn.style.display = 'inline-flex'; }
+    });
+    opts.appendChild(b);
+  });
+
+  card.appendChild(opts);
+  card.appendChild(feedback);
+  f.appendChild(card);
+
+  var actions = document.createElement('div');
+  actions.className = 'actions';
+  nextBtn = document.createElement('button');
+  nextBtn.className = 'btn'; nextBtn.type = 'button'; nextBtn.disabled = true;
+  nextBtn.style.display = 'none';
+  var last = callIndex === CALLS.length - 1;
+  nextBtn.innerHTML = (last ? 'Build the model' : 'Next decision') + ' <span class="arr" aria-hidden="true">&rarr;</span>';
+  nextBtn.addEventListener('click', function(){
+    playTick();
+    if (last){ go('model'); } else { callIndex++; go('calls'); }
+  });
+  actions.appendChild(nextBtn);
+  f.appendChild(actions);
+  return f;
+}
+
+/* ---------- model ---------- */
+function buildModel(){
+  var f = document.createElement('div');
+  var head = document.createElement('div');
+  head.className = 'sec-head';
+  head.innerHTML =
+    '<div class="eyebrow">What good looks like</div>' +
+    '<h2 class="title">Sort the levers</h2>' +
+    '<p class="sec-hint">Read each lever, then tap the stage it belongs to. Each button says what that stage means.</p>';
+  f.appendChild(head);
+
+  /* mix the levers into a fresh random order at the start of the challenge */
+  if (leverIndex === 0){ leverOrder = shuffle(LEVERS.slice()); }
+
+  var count = document.createElement('div'); count.className = 'placer-count';
+  var placer = document.createElement('div'); placer.className = 'placer';
+  var note = document.createElement('div'); note.className = 'placer-note';
+  var actions = document.createElement('div'); actions.className = 'actions';
+  var contBtn = document.createElement('button');
+  contBtn.className = 'btn'; contBtn.type = 'button';
+  actions.appendChild(contBtn);
+
+  /* the model board, shown below as a running tally */
+  var boardLabel = document.createElement('div'); boardLabel.className = 'board-label'; boardLabel.textContent = 'Your model so far';
+  var board = document.createElement('div'); board.className = 'board';
+  var quads = {};
+  STAGES.forEach(function(st){
+    var q = document.createElement('div');
+    q.className = 'quad';
+    q.innerHTML = '<div class="quad-name">' + st + '</div><div class="quad-gloss">' + STAGE_GLOSS[st] + '</div>';
+    board.appendChild(q);
+    quads[st] = q;
+  });
+  /* re-fill any quads already placed (so coming back keeps state visible) */
+  STAGES.forEach(function(st){
+    placed[st].forEach(function(txt){
+      var slot = document.createElement('div'); slot.className = 'quad-slot'; slot.textContent = txt;
+      quads[st].appendChild(slot); quads[st].classList.add('lit');
+    });
+  });
+
+  function totalPlaced(){ return STAGES.reduce(function(n,st){ return n + placed[st].length; }, 0); }
+
+  function renderStep(){
+    count.textContent = 'Placed ' + totalPlaced() + ' of ' + LEVERS.length;
+    note.innerHTML = '';
+    contBtn.style.display = 'none';
+
+    if (leverIndex >= LEVERS.length){
+      placer.innerHTML =
+        '<div class="lever">That is the shape of it.</div>' +
+        '<p class="placer-note"><b>Attract</b> more widely, <b>develop</b> deliberately, <b>retain</b> with real support, and <b>measure</b> what matters.</p>';
+      contBtn.innerHTML = 'See the takeaway <span class="arr" aria-hidden="true">&rarr;</span>';
+      contBtn.style.display = 'inline-flex';
+      contBtn.onclick = function(){ playTick(); go('close'); };
+      return;
+    }
+
+    var lv = leverOrder[leverIndex];
+    placer.innerHTML =
+      '<div class="lever">\u201C' + lv.text + '\u201D</div>' +
+      '<div class="ask">Which stage does this belong to?</div>';
+
+    var btns = document.createElement('div');
+    btns.className = 'stage-btns';
+    STAGES.forEach(function(st){
+      var b = document.createElement('button');
+      b.className = 'stage-btn'; b.type = 'button';
+      b.innerHTML = '<span class="sb-name">' + st + '</span><span class="sb-gloss">' + STAGE_GLOSS[st] + '</span>';
+      b.addEventListener('click', function(){
+        if (btns._locked) return;
+        if (st === lv.stage){
+          btns._locked = true;
+          b.classList.add('right');
+          playLand();
+          placed[st].push(lv.text);
+          var slot = document.createElement('div'); slot.className = 'quad-slot'; slot.textContent = lv.text;
+          quads[st].appendChild(slot); quads[st].classList.add('lit');
+          count.textContent = 'Placed ' + totalPlaced() + ' of ' + LEVERS.length;
+          Array.prototype.forEach.call(btns.children, function(x){ x.style.pointerEvents = 'none'; });
+          note.className = 'placer-note';
+          note.innerHTML = '<b>Yes.</b> ' + lv.why;
+          var last = leverIndex === LEVERS.length - 1;
+          contBtn.innerHTML = (last ? 'Finish' : 'Continue') + ' <span class="arr" aria-hidden="true">&rarr;</span>';
+          contBtn.style.display = 'inline-flex';
+          contBtn.onclick = function(){ playTick(); leverIndex++; renderStep(); };
+        } else {
+          b.classList.add('wrong');
+          playWarm();
+          note.className = 'placer-note';
+          note.innerHTML = 'Not quite. That one sits under <b>' + lv.stage + '</b>: ' + lv.why + ' Try again.';
+          setTimeout(function(){ b.classList.remove('wrong'); }, 450);
+        }
+      });
+      btns.appendChild(b);
+    });
+    placer.appendChild(btns);
+  }
+
+  f.appendChild(count);
+  f.appendChild(placer);
+  f.appendChild(note);
+  f.appendChild(actions);
+  f.appendChild(boardLabel);
+  f.appendChild(board);
+  renderStep();
+  return f;
+}
+
+/* ---------- close ---------- */
+function buildClose(){
+  var f = document.createElement('div');
+  var card = document.createElement('div');
+  card.className = 'close-card';
+  card.innerHTML =
+    '<div class="eyebrow">In summary</div>' +
+    '<div class="ctitle">A retention engine, not a cost</div>' +
+    '<p>Early careers is the sector\u2019s hardest people problem, and its biggest opportunity. The organisations that pull ahead will treat it as far more than recruitment: attract more widely, develop deliberately, and support people enough that they want to stay.</p>' +
+    '<p>The pay-off is real. Around two thirds of apprentices stay with the employer that trained them, and most employers say apprentices improve retention across the board. Build the conditions well and this generation is motivated, loyal and quick to add value.</p>';
+  f.appendChild(card);
+
+  var sig = document.createElement('p');
+  sig.className = 'signature';
+  sig.innerHTML = 'A short demonstration piece.<br>Designed and built in-house as a single file. No dependencies, no tracking.';
+  f.appendChild(sig);
+
+  var actions = document.createElement('div');
+  actions.className = 'actions';
+  var again = document.createElement('button');
+  again.className = 'btn ghost'; again.type = 'button';
+  again.innerHTML = '<span class="arr" aria-hidden="true">&larr;</span> Start again';
+  again.addEventListener('click', function(){
+    callIndex = 0; leverIndex = 0; placed = { Attract:[], Develop:[], Retain:[], Measure:[] };
+    playTick(); go('intro');
+  });
+  actions.appendChild(again);
+  f.appendChild(actions);
+  return f;
+}
+
+/* ---------- render ---------- */
+function render(){
+  var app = document.getElementById('app');
+  app.innerHTML = '';
+  var shell = document.createElement('div');
+  shell.className = 'wrap';
+  shell.appendChild(buildBar());
+  shell.appendChild(buildProgress());
+
+  var main = document.createElement('main');
+  main.className = 'view';
+  main.setAttribute('tabindex','-1');
+
+  if (screen === 'intro') main.appendChild(buildIntro());
+  else if (screen === 'cliff') main.appendChild(buildCliff());
+  else if (screen === 'myths') main.appendChild(buildMyths());
+  else if (screen === 'calls') main.appendChild(buildCalls());
+  else if (screen === 'model') main.appendChild(buildModel());
+  else if (screen === 'close') main.appendChild(buildClose());
+
+  shell.appendChild(main);
+
+  var foot = document.createElement('div');
+  foot.className = 'foot';
+  foot.textContent = 'An interactive demonstration';
+  shell.appendChild(foot);
+
+  app.appendChild(shell);
+  main.focus({ preventScroll:true });
+}
+
+render();
+</script>
+</body>
+</html>
